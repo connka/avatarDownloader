@@ -50,11 +50,10 @@ request(options, function(err, res, body) {
     if (err) throw err;
 })
 
-.on('response', function (response) {                            
-    console.log(`Response Status Code: ${response.statusCode} 
-    Response Status Message: ${response.statusMessage} 
-    Content Type: ${response.headers['content-type']}`)
-    console.log(`Download complete!`)
+  .on('response', function (response) { 
+    response.on('end',function(){
+      console.log(`Downloaded Image: ${fileName}`);
+    })
   })
 
  .pipe(fs.createWriteStream(`./downloaded/${fileName}.jpg`)); 
